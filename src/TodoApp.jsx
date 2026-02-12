@@ -7,6 +7,7 @@ const TodoApp = () => {
   const [modalConfirmation, setModalConfirmation] = useState(false);
   const [taskID, setTaskID] = useState("");
   const [taskStatus, setTaskStatus] = useState("");
+ const [error, setError] = useState(false);
 
   const [newtask, setNewTask] = useState({
     id: "",
@@ -18,7 +19,7 @@ const TodoApp = () => {
     return JSON.parse(localStorage.getItem("Task")) || [];
   });
   const CreateTask = () => {
-    if (!newtask.title || !newtask.priority) return;
+    if (!newtask.title || !newtask.priority) return setError(true);
 
     const dataWithId = {
       ...newtask,
@@ -30,7 +31,7 @@ const TodoApp = () => {
       localStorage.setItem("Task", JSON.stringify(updatedTasks));
       return updatedTasks;
     });
-
+setError(false)
     setNewTask({
       title: "",
       priority: "",
@@ -85,23 +86,24 @@ const TodoApp = () => {
   };
 
   return (
-    <div class="container vh-100 d-flex justify-content-center align-items-center">
-      <div class="mb-3 ">
+    <div className="container vh-100 d-flex justify-content-center align-items-center">
+      
+      <div className="mb-3 ">
         <div className="mb-4 text-center">
           <h1 className="fw-bold">Your Todo App</h1>
           <p className="text-muted">Add and manage your tasks easily</p>
         </div>
 
-        <div class="d-flex column-gap-3">
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="visible-addon">
+        <div className="d-flex column-gap-3">
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="visible-addon">
               Task Name
             </span>
             <input
               onChange={handleChange}
               value={newtask.title}
               type="text"
-              class="form-control"
+               className={`form-control ${error ? "is-invalid" : ""}`}
               id="title"
               name="title"
               placeholder="Task Name..."
@@ -109,19 +111,20 @@ const TodoApp = () => {
             />
           </div>
 
-          <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">
+          <div className="input-group mb-3">
+            <label className="input-group-text" htmlFor="inputGroupSelect01">
               Priority
             </label>
             <select
-              class="form-select"
+               className={`form-select ${error ? "is-invalid" : ""}`}
+
               onChange={handleChange}
               id="priority"
               name="priority"
               aria-label="Priority"
-              value={newtask.priority}
+              defaultValue={newtask.priority}
             >
-              <option selected>Choose...</option>
+              <option value>Choose...</option>
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>

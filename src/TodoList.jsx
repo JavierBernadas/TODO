@@ -9,14 +9,11 @@ const TodoList = ({
   updateStatus,
   task_id,
 }) => {
-
   const changeStatus = (e) => {
     const { value } = e.target;
     console.log("TEST for EDIT ! ", value);
     updateStatus(task_id, value);
   };
-
-  
 
   return (
     <tr>
@@ -26,17 +23,25 @@ const TodoList = ({
         <span>{priority_level}</span>
       </td>
       <td>
-        <div class="input-group ">
+        <div className="input-group ">
           <select
-            class="form-select"
-            value={status}
+            className={`form-select ${
+              status === "Completed"
+                ? "bg-success text-white"
+                : status === "Pending"
+                  ? "bg-warning text-dark"
+                  : status === "Ongoing"
+                    ? "bg-primary text-white"
+                    : ""
+            }`}
+            defaultValue={status}
             id="inputGroupSelect01"
             onChange={changeStatus}
             disabled={status == "Completed" ? true : false}
           >
-            <option value="Pending">Pending</option>
-            <option value="Ongoing">Ongoing</option>
-            <option value="Completed">Completed</option>
+            <option className="bg-secondary text-white" value="Pending">Pending</option>
+            <option className="bg-secondary text-white" value="Ongoing">Ongoing</option>
+            <option className="bg-secondary text-white" value="Completed">Completed</option>
           </select>
         </div>
         {/* <span>{status}</span> */}

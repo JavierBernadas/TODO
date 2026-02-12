@@ -19,7 +19,7 @@ const TodoTable = ({
   };
 
   return (
-    <div class=" mt-3">
+    <div className=" mt-3">
       <table className="table table-striped table-hover table-bordered align-middle">
         <thead className="table-dark">
           <tr>
